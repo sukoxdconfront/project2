@@ -1,5 +1,10 @@
-FROM ubuntu:22.04 as system
+# use the base image
+FROM fredblgr/ubuntu-novnc:22.04
 
-RUN apt update && apt install tmate -y && tmate
+#expose the port on which NoVNC runs (80 inside container) EXPOSE 80
 
-CMD /bin/bash -c "while true; do echo -d Big Boy! -2; echo 'Press Ctrl+c to exit'; sleep 5; done"
+# Set the environment variable for screen resolution
+ENV RESOLUTION 1441x791
+
+# Start the command to run NoVNC
+CMD [“supercvisord”, “-c”,  “/etc/supervisor/supervisord.conf”]
